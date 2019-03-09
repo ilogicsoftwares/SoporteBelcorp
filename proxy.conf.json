@@ -1,0 +1,7 @@
+{
+    "/Seguridad/*": {
+      "target": "http://soporte.somosbelcorp.com",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }
