@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpXsrfTokenExtractor} from '@angular/common/http';
+import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
+
+
+
+
 export  class AuthServiceService {
-  constructor(private http: HttpClient){}
+  isAuth:boolean=false; 
+  headers=new HttpHeaders();
+  
+  constructor(private http: HttpClient){
+    this.headers = this.headers.append('Content-Type', 'application/json');
+  }
   login(user: string,pws: string){
-    return this.http.post<any>("http://soporte.somosbelcorp.com/Seguridad/LoginInicio",
-    {UserLogin:"sdigitalpalancas",Password:"Belcorp2018#"}
+    return this.http.post<any>("/Seguridad/LoginInicio",
+    {UserLogin:user,Password:pws},{headers:this.headers,withCredentials:true},
     )
   }
-
+   public static IsAuth(){
+     return this.IsAuth;
+   }
 }
