@@ -9,13 +9,25 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { AuthServiceService } from './guards/auth-service.service';
 import {HttpClientModule} from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
+import { HomeContextComponent } from './home/home-context/home-context.component';
+import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { CuvsComponent } from './cuvs/cuvs.component';
+import { NavcontextComponent } from './navcontext/navcontext.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainLoginComponent,
     HomeComponent,
-    LoaderComponent
+    LoaderComponent,
+    HomeContextComponent,
+    SidemenuComponent,
+    WelcomeComponent,
+    PedidosComponent,
+    CuvsComponent,
+    NavcontextComponent
   ],
   imports: [
     BrowserModule,

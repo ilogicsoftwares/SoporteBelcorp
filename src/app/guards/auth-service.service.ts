@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/http';
+import {SessionService} from  '../session.service'
+import { JsonPipe } from '@angular/common';
+import { jsonpCallbackContext } from '@angular/common/http/src/module';
 @Injectable({
   providedIn: 'root'
 })
@@ -8,10 +11,10 @@ import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/h
 
 
 export  class AuthServiceService {
-  isAuth:boolean=false; 
+  
   headers=new HttpHeaders();
   
-  constructor(private http: HttpClient){
+  constructor(private http: HttpClient, private session:SessionService){
     this.headers = this.headers.append('Content-Type', 'application/json');
   }
   login(user: string,pws: string){
@@ -19,7 +22,14 @@ export  class AuthServiceService {
     {UserLogin:user,Password:pws},{headers:this.headers,withCredentials:true},
     )
   }
-   public static IsAuth(){
-     return this.IsAuth;
+   public  IsAuth(){
+     return  JSON.parse(this.session.getKey("isAuth"));
    }
+   public  logOut(){
+     this.session.setKey("isAuth","false");
+   }
+   public setAuth(value:string){
+    this.session.setKey("isAuth",value);
+   }
+   
 }

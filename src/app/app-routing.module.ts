@@ -4,10 +4,34 @@ import { AppComponent } from './app.component';
 import { HomeComponent} from './home/home.component';
 import { MainLoginComponent } from './main-login/main-login.component';
 import { AuthGuardService } from './guards/auth-guard.service';
+import {HomeContextComponent} from './home/home-context/home-context.component'
+import { WelcomeComponent } from './welcome/welcome.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { CuvsComponent } from './cuvs/cuvs.component';
 
 const routes: Routes = [
-  {path: '', component: MainLoginComponent},
-  {path: 'home', component: HomeComponent,canActivate:[AuthGuardService]},
+  {path: '', redirectTo: 'login',pathMatch:'full'},
+  {path: 'login', component: MainLoginComponent},
+  {path: 'home', component: HomeComponent,canActivate:[AuthGuardService],children:[
+   {
+     path:"",
+     component:WelcomeComponent,
+     canActivate:[AuthGuardService],
+     outlet:'secondary'
+   },
+   {
+     path:"pedido",
+     component:PedidosComponent,
+     canActivate:[AuthGuardService],
+     outlet:'secondary'
+   },
+   {
+     path:"cuvs",
+     component:CuvsComponent,
+     canActivate:[AuthGuardService],
+     outlet:'secondary'
+   }
+  ]}
 ];
 
 @NgModule({

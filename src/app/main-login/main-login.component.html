@@ -9,6 +9,7 @@
 		<div class="container">
 
 			<form class="form-signin" (submit)="login()" ngNativeValidate>
+				<img class="img-responsive" src="/assets/images/logobelcorp.png" alt="" srcset="">
 				<h1 class="form-signin-heading text-muted">Soporte Belcorp</h1>
 				<input type="text" class="form-control" placeholder="Usuario" autofocus=""
 					[(ngModel)]="usuario" name="usuario"  required="">
@@ -17,7 +18,9 @@
 				<button class="btn btn-lg btn-primary btn-block" type="submit">
 					Sign In
 				</button>
-				
+				<p *ngIf="userError" style="color:white;font-weight: 600">
+				Usuario o Clave Incorrectos
+				</p>
 			</form>
 			<app-loader [active]="loaderActive"></app-loader>
 			

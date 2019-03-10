@@ -16,6 +16,7 @@ export class MainLoginComponent implements OnInit {
   usuario: string;
   clave: string;
   router:Router;
+  userError:boolean=false;
   loaderActive:boolean=false;
   constructor( router: Router, private authService: AuthServiceService) { 
     this.router=router;
@@ -30,11 +31,15 @@ export class MainLoginComponent implements OnInit {
    this.authService.login(this.usuario,this.clave).subscribe((data) =>{
     console.log(data.headers);
     if (data.Success){
-      this.authService.isAuth=true;
-      this.loaderActive=false;
+      this.authService.setAuth("true");
+      
       this.router.navigate(['/home']);
       
+    }else{
+      this.userError=true;
+      
     }
+    this.loaderActive=false;
     
    },(error) =>{
     console.log(error);

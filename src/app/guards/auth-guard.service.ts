@@ -9,11 +9,11 @@ import { AuthServiceService } from './auth-service.service';
 })
 export class AuthGuardService {
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router, private authservice:AuthServiceService) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (AuthServiceService.IsAuth()) {
+    if (this.authservice.IsAuth()) {
         return true;
     }
 
