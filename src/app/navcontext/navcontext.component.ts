@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
+
 
 @Component({
   selector: 'app-navcontext',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navcontext.component.css']
 })
 export class NavcontextComponent implements OnInit {
-
-  constructor() { }
+ @Input() title;
+ 
+  constructor() {
+ 
+  }
 
   ngOnInit() {
   }
