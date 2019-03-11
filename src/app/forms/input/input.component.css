@@ -1,0 +1,13 @@
+.labelx{
+    width: 20%;
+    text-align: right;
+}
+    
+.textBox{
+     width: 80%;
+}
+    
+ .form-group{
+    width: 100%!important;
+    margin-top: 5px; 
+}

@@ -2,3 +2,8 @@
 html{
     height: 100%;
 }
+.shadow{
+    -webkit-box-shadow: 13px 6px 22px -5px rgba(145,145,145,1);
+-moz-box-shadow: 13px 6px 22px -5px rgba(145,145,145,1);
+box-shadow: 13px 6px 22px -5px rgba(145,145,145,1);
+}

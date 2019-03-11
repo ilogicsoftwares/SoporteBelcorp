@@ -15,6 +15,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { CuvsComponent } from './cuvs/cuvs.component';
 import { NavcontextComponent } from './navcontext/navcontext.component';
+import { FormTinybaseComponent } from './forms/form-tinybase/form-tinybase.component';
+import { InputComponent } from './forms/input/input.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { NavcontextComponent } from './navcontext/navcontext.component';
     WelcomeComponent,
     PedidosComponent,
     CuvsComponent,
-    NavcontextComponent
+    NavcontextComponent,
+    FormTinybaseComponent,
+    InputComponent
   ],
   imports: [
     BrowserModule,
