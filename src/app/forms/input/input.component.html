@@ -1,4 +1,4 @@
 <div class="form-group">
     <label class="labelx"  for="{{input.inputid}}">{{input.label}}</label>
-    <input  type="{{input.inputType}}" class="form-control textBox" placeholder="{{input.inputPlaceHolder}}" id="{{input.inputid}}">
+    <input [(ngModel)]="input.value"  type="{{input.inputType}}" class="form-control textBox" placeholder="{{input.inputPlaceHolder}}" id="{{input.inputid}}" name="{{input.inputid}}">
 </div>

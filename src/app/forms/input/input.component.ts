@@ -7,12 +7,9 @@ import { Inputcontrol } from 'src/app/models/inputcontrol.model';
   styleUrls: ['./input.component.css']
 })
 export class InputComponent implements OnInit {
-  @Input() input: Inputcontrol= new Inputcontrol();
+  @Input() input: Inputcontrol;
   constructor() { 
-    this.input.label="Ejemplo: ";
-    this.input.inputPlaceHolder="ejemplo";
-    this.input.inputid="ejemplo";
-    this.input.inputType="text";
+   
   }
 
   ngOnInit() {

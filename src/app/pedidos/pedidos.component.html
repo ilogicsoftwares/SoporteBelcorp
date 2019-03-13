@@ -1,2 +1,2 @@
 <app-navcontext [title]="'PEDIDO CONSULTORA'"></app-navcontext>
-<app-form-tinybase></app-form-tinybase>
+<app-form-tinybase [inputs]="inputs" (eventAplicar)="getParams($event)"></app-form-tinybase>
