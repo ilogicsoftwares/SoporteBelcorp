@@ -36,7 +36,6 @@ export class SomosbelcorpService {
     let object={};
     ColNames.forEach((element,index) => {
       object[element.Nombre]=Fila.Datos[index];
-     
     });
     return object;
   }

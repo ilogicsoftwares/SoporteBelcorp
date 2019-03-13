@@ -17,6 +17,8 @@ import { CuvsComponent } from './cuvs/cuvs.component';
 import { NavcontextComponent } from './navcontext/navcontext.component';
 import { FormTinybaseComponent } from './forms/form-tinybase/form-tinybase.component';
 import { InputComponent } from './forms/input/input.component';
+import {AgGridModule} from 'ag-grid-angular';
+import { TableComponent } from './forms/table/table.component';
 
 @NgModule({
   declarations: [
@@ -31,13 +33,15 @@ import { InputComponent } from './forms/input/input.component';
     CuvsComponent,
     NavcontextComponent,
     FormTinybaseComponent,
-    InputComponent
+    InputComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AgGridModule.withComponents(null)
   ],
   providers: [AuthGuardService,AuthServiceService,LoaderComponent],
   bootstrap: [AppComponent]
