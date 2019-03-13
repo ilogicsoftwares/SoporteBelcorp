@@ -6,18 +6,21 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
-  @Input() data;
-  columnDefs = [
-    {headerName: 'Make', field: 'make'},
-    {headerName: 'Model', field: 'model'},
-    {headerName: 'Price', field: 'price'}
-];
-
-rowData = [
-    {make: 'Toyota', model: 'Celica', price: 35000},
-    {make: 'Ford', model: 'Mondeo', price: 32000},
-    {make: 'Porsche', model: 'Boxter', price: 72000}
-];
+  columnDefs:any[];
+  private _data;
+  @Input() title:string="";
+  @Input() set data(v){
+    this._data=v;
+    let colnames=Object.keys(v[0]);
+    this.columnDefs=colnames.map(item=>{
+     return  {headerName:item,field:item};
+    });
+    this.rowData=v;
+  };
+  get data():any{
+    return this._data;
+  }
+  rowData :any[];
   constructor() { }
 
   ngOnInit() {

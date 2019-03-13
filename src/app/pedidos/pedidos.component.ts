@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Inputcontrol } from '../models/inputcontrol.model';
 import { SomosbelcorpService } from '../somosbelcorp.service';
+import { TableComponent } from '../forms/table/table.component';
 
 let controles=[{
   label:"País:",
@@ -23,6 +24,9 @@ let controles=[{
 })
 export class PedidosComponent implements OnInit {
   inputs:any[];
+  dataDetalle;
+  @ViewChild('tbl') table: TableComponent;
+  verDetalle:boolean=false;
   constructor(private somos:SomosbelcorpService) { 
     this.inputs=controles;
   }
@@ -32,7 +36,10 @@ export class PedidosComponent implements OnInit {
 
   getParams($event){
     this.somos.cosultarPedido($event.pais,$event.campana,$event.consultora).subscribe((response)=>{
-    console.log(this.somos.convertTableToObject(response));
+ 
+      this.verDetalle=true;
+      this.dataDetalle=this.somos.convertTableToObject(response);
+      console.log(response);
     },(error)=>{
       console.log(error);
     })

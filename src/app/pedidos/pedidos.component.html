@@ -1,4 +1,4 @@
 <app-navcontext [title]="'PEDIDO CONSULTORA'"></app-navcontext>
 <app-form-tinybase [inputs]="inputs" (eventAplicar)="getParams($event)"></app-form-tinybase>
 
-<app-table></app-table>
+<app-table #tbl *ngIf="verDetalle" [data]="dataDetalle" [title]="'Pedido Detalle'"></app-table>
