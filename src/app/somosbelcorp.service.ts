@@ -10,8 +10,9 @@ export class SomosbelcorpService {
 
   cosultarPedido(codigopais,codigoCampana,codigoConsultora){
     let sqlScript=`use belcorpperu
-    select top 5 ped.* from pedidoweb ped
+    select  pwd.PedidoID,pwd.CUV, pwd.PedidoDetalleID, pwd.CANTIDAD,pwd.PrecioUnidad,pwd.ImporteTotal,pwd.TipoEstrategiaID from pedidoweb ped
     inner join ods.consultora con on con.consultoraid = ped.consultoraid
+    inner join pedidowebdetalle pwd on pwd.pedidoid=ped.pedidoid
     inner join usuario us on us.codigoconsultora = con.codigo
     where us.codigousuario='${codigoConsultora}' and ped.campaniaid=${codigoCampana}`;
     let params={idConexion:"23",
@@ -24,15 +25,19 @@ export class SomosbelcorpService {
   }
   convertTableToObject(tablex){
     let data=[];
-    
     let table=tablex[0];
-    let object={};
-    table.Columnas.forEach((element,index) => {
-      object[element.Nombre]=table.Filas[0].Datos[index];
-     
+    table.Filas.forEach(Fila => {
+      data.push(this.convertRowToObject(Fila,table.Columnas));
     });
-    data.push(object);
     return data;
    
+  }
+  convertRowToObject(Fila,ColNames:any[]){
+    let object={};
+    ColNames.forEach((element,index) => {
+      object[element.Nombre]=Fila.Datos[index];
+     
+    });
+    return object;
   }
 }
