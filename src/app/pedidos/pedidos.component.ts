@@ -32,7 +32,7 @@ export class PedidosComponent implements OnInit {
 
   getParams($event){
     this.somos.cosultarPedido($event.pais,$event.campana,$event.consultora).subscribe((response)=>{
-    console.log(response);
+    console.log(this.somos.convertTableToObject(response));
     },(error)=>{
       console.log(error);
     })
