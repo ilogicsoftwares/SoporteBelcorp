@@ -35,7 +35,7 @@ export class PedidosComponent implements OnInit {
   }
 
   getParams($event){
-    this.somos.cosultarPedido($event.pais,$event.campana,$event.consultora).subscribe((response)=>{
+      this.somos.cosultarPedidoDetalle($event.pais,$event.campana,$event.consultora).subscribe((response)=>{
  
       this.verDetalle=true;
       this.dataDetalle=this.somos.convertTableToObject(response);

@@ -6,4 +6,5 @@ export class Inputcontrol {
    inputPlaceHolder:string;
    label:string;
    value:string;
+   controlType:string='input';
 }

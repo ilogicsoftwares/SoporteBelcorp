@@ -5,11 +5,11 @@ import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/h
   providedIn: 'root'
 })
 export class SomosbelcorpService {
-
+  conexionSoportId:number=25;
   constructor(private http: HttpClient) { }
 
-  cosultarPedido(codigopais,codigoCampana,codigoConsultora){
-    let sqlScript=`use belcorpperu
+  cosultarPedidoDetalle(codigopais,codigoCampana,codigoConsultora){
+    let sqlScript=`use belcorpcostarica
     select  pwd.PedidoID,pwd.CUV, pwd.PedidoDetalleID, pwd.CANTIDAD,pwd.PrecioUnidad,pwd.ImporteTotal,pwd.TipoEstrategiaID from pedidoweb ped
     inner join ods.consultora con on con.consultoraid = ped.consultoraid
     inner join pedidowebdetalle pwd on pwd.pedidoid=ped.pedidoid
@@ -38,5 +38,18 @@ export class SomosbelcorpService {
       object[element.Nombre]=Fila.Datos[index];
     });
     return object;
+  }
+  listarConexiones(){
+    let sqlScript =`select idConexion,replace(nombreBD,'Belcorp','') as NombreBD 
+     from conexion where nombrebd like '%belcorp%`;
+    let params={idConexion:this.conexionSoportId,
+    consultaSql:sqlScript,
+    usuario:"sdigitalpalancas"};
+
+    return this.http.post<any>("/Consultoras/EjecutarQuerySql",
+    params);
+  }
+  getPedidoWebSet(){
+
   }
 }

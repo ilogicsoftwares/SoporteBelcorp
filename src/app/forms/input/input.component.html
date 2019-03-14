@@ -1,4 +1,16 @@
-<div class="form-group">
+<div class="form-group" *ngIf="input.controlType=='input'">
     <label class="labelx"  for="{{input.inputid}}">{{input.label}}</label>
     <input [(ngModel)]="input.value"  type="{{input.inputType}}" class="form-control textBox" placeholder="{{input.inputPlaceHolder}}" id="{{input.inputid}}" name="{{input.inputid}}">
 </div>
+
+<div class="form-group" *ngIf="input.controlType=='label'">
+    <label class="labelx"  for="{{input.inputid}}">{{input.label}}</label>
+    <p>{{input.value}}</p>
+</div>
+
+<div class="form-group" *ngIf="input.controlType=='select'"> <!-- AGEREGAR SELECT-->
+    <label class="labelx"  for="{{input.inputid}}">{{input.label}}</label>
+    <p>{{input.value}}</p>
+</div>
+
+
