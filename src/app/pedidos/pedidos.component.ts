@@ -6,15 +6,19 @@ import { TableComponent } from '../forms/table/table.component';
 let controles=[{
   label:"País:",
   inputid:"pais",
-  inputPlaceHolder:"Codigo País"
+  inputPlaceHolder:"Codigo País",
+  controlType:'label',
+  value:'Hola mundo'
 },{
   label:"Campaña:",
   inputid:"campana",
-  inputPlaceHolder:"Campaña"
+  inputPlaceHolder:"Campaña",
+  controlType:'input'
 },{
   label:"Consultora ID:",
   inputid:"consultora",
-  inputPlaceHolder:"Consultora ID"
+  inputPlaceHolder:"Consultora ID",
+  controlType:'input'
 }]
 
 @Component({
