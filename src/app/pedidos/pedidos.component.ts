@@ -6,9 +6,8 @@ import { TableComponent } from '../forms/table/table.component';
 let controles=[{
   label:"País:",
   inputid:"pais",
-  inputPlaceHolder:"Codigo País",
-  controlType:'label',
-  value:'Hola mundo'
+  inputPlaceHolder:"Codigo País(BD)",
+  controlType:'input'
 },{
   label:"Campaña:",
   inputid:"campana",
@@ -29,6 +28,9 @@ let controles=[{
 export class PedidosComponent implements OnInit {
   inputs:any[];
   dataDetalle;
+  dataSet;
+  dataSetDetalle;
+
   @ViewChild('tbl') table: TableComponent;
   verDetalle:boolean=false;
   constructor(private somos:SomosbelcorpService) { 
@@ -44,10 +46,35 @@ export class PedidosComponent implements OnInit {
       this.verDetalle=true;
       this.dataDetalle=this.somos.convertTableToObject(response);
       console.log(response);
+      //pedidowebSet
+      this.somos.consultarPedidoSet($event.pais,this.dataDetalle[0].PedidoID).subscribe((response2)=>{
+ 
+        this.verDetalle=true;
+        this.dataSet=this.somos.convertTableToObject(response2);
+        console.log(response2);
+      },(error)=>{
+        console.log(error);
+      })
+      console.log($event);
+      this.somos.consultarPedidoSetDetalle($event.pais,this.dataDetalle[0].PedidoID).subscribe((response3)=>{
+ 
+        this.verDetalle=true;
+        this.dataSetDetalle=this.somos.convertTableToObject(response3);
+        console.log(response3);
+      },(error)=>{
+        console.log(error);
+      })
+      console.log($event);
+      
+
+
+
     },(error)=>{
       console.log(error);
     })
     console.log($event);
+
+    
   }
 
 

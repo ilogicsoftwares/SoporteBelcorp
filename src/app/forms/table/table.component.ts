@@ -13,7 +13,7 @@ export class TableComponent implements OnInit {
     this._data=v;
     let colnames=Object.keys(v[0]);
     this.columnDefs=colnames.map(item=>{
-     return  {headerName:item,field:item};
+     return  {headerName:item,field:item,editable:true};
     });
     this.rowData=v;
   };
