@@ -8,6 +8,7 @@ import {HomeContextComponent} from './home/home-context/home-context.component'
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { CuvsComponent } from './cuvs/cuvs.component';
+import { OfertaPersonalizadaComponent } from './components/oferta-personalizada/oferta-personalizada.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login',pathMatch:'full'},
@@ -25,6 +26,12 @@ const routes: Routes = [
      canActivate:[AuthGuardService],
      outlet:'secondary'
    },
+   {
+    path:"ofertaPersonalizada",
+    component:OfertaPersonalizadaComponent,
+    canActivate:[AuthGuardService],
+    outlet:'secondary'
+  },
    {
      path:"cuvs",
      component:CuvsComponent,

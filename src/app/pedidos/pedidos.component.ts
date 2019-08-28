@@ -7,8 +7,7 @@ let controles=[{
   label:"País:",
   inputid:"pais",
   inputPlaceHolder:"Codigo País",
-  controlType:'label',
-  value:'Hola mundo'
+  controlType:'input',
 },{
   label:"Campaña:",
   inputid:"campana",

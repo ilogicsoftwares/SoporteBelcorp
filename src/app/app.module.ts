@@ -19,6 +19,7 @@ import { FormTinybaseComponent } from './forms/form-tinybase/form-tinybase.compo
 import { InputComponent } from './forms/input/input.component';
 import {AgGridModule} from 'ag-grid-angular';
 import { TableComponent } from './forms/table/table.component';
+import { OfertaPersonalizadaComponent } from './components/oferta-personalizada/oferta-personalizada.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TableComponent } from './forms/table/table.component';
     NavcontextComponent,
     FormTinybaseComponent,
     InputComponent,
-    TableComponent
+    TableComponent,
+    OfertaPersonalizadaComponent
   ],
   imports: [
     BrowserModule,
