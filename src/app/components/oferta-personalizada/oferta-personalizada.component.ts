@@ -51,7 +51,7 @@ export class OfertaPersonalizadaComponent implements OnInit {
     this.somos.consultaOfertaPersonalizada($event.pais,$event.campana,$event.consultora,$event.tipoPersonalizacion, $event.cuv).subscribe((response)=>{
 
     this.verDetalle=true;
-    this.dataDetalle=this.somos.convertTableToObject(response);
+    this.dataDetalle=response.value;
     console.log(response);
   },(error)=>{
     console.log(error);

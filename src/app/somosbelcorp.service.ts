@@ -30,47 +30,9 @@ export class SomosbelcorpService {
     return ofertasPersonalizadas;
   }
 
-  getOfertaPersonalizadaX(codigoPais, codigoCampana, tipoPersonalizacion, cuv){
-    let sqlScriptPersonalizada = `use ${this.getBD(codigoPais)}
-    select * from ods.ofertaspersonalizadas
-    where AnioCampanaVenta = '${codigoCampana}'
-    and CodConsultora = '${environment.consultoraX}'
-    and CUV = '${cuv}'
-    and TipoPersonalizacion = '${tipoPersonalizacion}'`;
-    
-    let params={idConexion:"23",
-    consultaSql:sqlScriptPersonalizada,
-    usuario:"sdigitalpalancas"};
-
-    let ofertasPersonalizadas = this.http.post<any>("/Consultoras/EjecutarQuerySql",
-    params
-    )
-
-    return ofertasPersonalizadas;
-  }
-
-  getOfertaPersonalizadaY(codigoPais, codigoCampana, tipoPersonalizacion, cuv){
-    let sqlScriptPersonalizada = `use ${this.getBD(codigoPais)}
-    select * from ods.ofertaspersonalizadas
-    where AnioCampanaVenta = '${codigoCampana}'
-    and CodConsultora = '${environment.consultoraY}'
-    and CUV = '${cuv}'
-    and TipoPersonalizacion = '${tipoPersonalizacion}'`;
-    
-    let params={idConexion:"23",
-    consultaSql:sqlScriptPersonalizada,
-    usuario:"sdigitalpalancas"};
-
-    let ofertasPersonalizadas = this.http.post<any>("/Consultoras/EjecutarQuerySql",
-    params
-    )
-
-    return ofertasPersonalizadas;
-  }
-
   getOfertaPersonalizadaCUV(codigoPais, codigoCampana, tipoPersonalizacion, cuv){
     let sqlScriptPersonalizada = `use ${this.getBD(codigoPais)}
-    select * from ods.ofertaspersonalizadas
+    select * from ods.ofertaspersonalizadascuv
     where AnioCampanaVenta = '${codigoCampana}'
     and CUV = '${cuv}'
     and TipoPersonalizacion = '${tipoPersonalizacion}'`;
@@ -88,8 +50,8 @@ export class SomosbelcorpService {
 
   getProductoComercial(codigoPais, codigoCampana, cuv){
     let sqlScriptPersonalizada = `use ${this.getBD(codigoPais)}
-    select * from ods.ofertaspersonalizadas
-    where AnioCampanaVenta = '${codigoCampana}'
+    select * from ods.productocomercial
+    where AnoCampania = '${codigoCampana}'
     and CUV = '${cuv}'`;
     
     let params={idConexion:"23",
@@ -103,34 +65,49 @@ export class SomosbelcorpService {
     return ofertasPersonalizadas;
   }
 
-  getEstrategia(codigoPais, codigoCampana, cuv){
-    let sqlScriptPersonalizada = `use ${this.getBD(codigoPais)}
-    select * from ods.ofertaspersonalizadas
-    and CUV = '${cuv}'`;
-    
-    let params={idConexion:"23",
-    consultaSql:sqlScriptPersonalizada,
-    usuario:"sdigitalpalancas"};
-
-    let ofertasPersonalizadas = this.http.post<any>("/Consultoras/EjecutarQuerySql",
-    params
-    )
-
-    return ofertasPersonalizadas;
-  }
 
   public consultaOfertaPersonalizada(codigoPais, codigoCampana, codigoConsultora, tipoPersonalizacion, cuv): Observable<any> {
-    //let response1 = this.http.get(requestUrl1);
-    //let response2 = this.http.get(requestUrl2);
-    //let response3 = this.http.get(requestUrl3);
 
-    let response1 = this.getOfertaPersonalizada(codigoPais, codigoCampana, codigoConsultora, tipoPersonalizacion, cuv);
-    let response2 = this.getOfertaPersonalizadaX(codigoPais, codigoCampana, tipoPersonalizacion, cuv);
-    let response3 = this.getOfertaPersonalizadaY(codigoPais, codigoCampana, tipoPersonalizacion, cuv);
-    let respuesta = forkJoin([response1, response2, response3]).pipe(map((data)=>{
-      let repsonse1 = this.convertTableToObject(data[0]);
-      let respuesta2 = "no existe";
-      return of(respuesta2);
+    let respuestaFinal = [];
+    let listaOfertaPersonalizada = this.getOfertaPersonalizada(codigoPais, codigoCampana, codigoConsultora, tipoPersonalizacion, cuv);
+    let listaOfertaPersonalizadaX = this.getOfertaPersonalizada(codigoPais, codigoCampana, environment.consultoraX, tipoPersonalizacion, cuv);
+    let listaOfertaPersonalizadaY = this.getOfertaPersonalizada(codigoPais, codigoCampana, environment.consultoraY,tipoPersonalizacion, cuv);
+    let listaOfertaPersonalizadaCuv = this.getOfertaPersonalizadaCUV(codigoPais, codigoCampana,tipoPersonalizacion, cuv);
+    let listaProductoComercial = this.getProductoComercial(codigoPais, codigoCampana, cuv);
+    let respuesta = forkJoin
+    ([
+      listaOfertaPersonalizada, 
+      listaOfertaPersonalizadaX, 
+      listaOfertaPersonalizadaY,
+      listaOfertaPersonalizadaCuv,
+      listaProductoComercial
+    ]).pipe(map((data)=>{
+      let jsonOfertaPersonalizada = this.convertTableToObject(data[0]);
+      let jsonOfertaPersonalizadaX = this.convertTableToObject(data[1]);
+      let jsonOfertaPersonalizadaY = this.convertTableToObject(data[2]);
+      let listaOfertaPersonalizadaCuv = this.convertTableToObject(data[3]);
+      let listaProductoComercial = this.convertTableToObject(data[4]);
+      let mensaje = "";
+
+      if(jsonOfertaPersonalizada.length == 0){
+        if(jsonOfertaPersonalizadaX.length == 0 && jsonOfertaPersonalizadaY.length == 0){
+          mensaje = 'No se encontró oferta en oferta personalizada SQL|';
+        }
+      }
+
+      if(listaOfertaPersonalizadaCuv.length == 0){
+        mensaje += 'No se encontró oferta en oferta personalizada cuv SQL|';
+      }
+
+      if(listaProductoComercial.length == 0){
+        mensaje += 'No se encontró oferta en producto comercial SQL|';
+      }
+
+      let respuestaFinal = [
+        {Mensaje : mensaje}
+      ]
+      
+      return of(respuestaFinal);
     }));
     return respuesta;
   }
@@ -150,10 +127,6 @@ export class SomosbelcorpService {
     params,
     )
   }
-
-
-
-
 
   convertTableToObject(tablex){
     let data=[];
