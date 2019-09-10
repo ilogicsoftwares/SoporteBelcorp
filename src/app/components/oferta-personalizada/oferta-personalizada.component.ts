@@ -14,11 +14,6 @@ let controles=[{
   inputPlaceHolder:"Campaña",
   controlType:'input'
 },{
-  label:"Código Consultora:",
-  inputid:"consultora",
-  inputPlaceHolder:"Código Consultora",
-  controlType:'input'
-},{
   label:"Palanca:",
   inputid:"tipoPersonalizacion",
   inputPlaceHolder:"Tipo Personalización",
@@ -48,10 +43,10 @@ export class OfertaPersonalizadaComponent implements OnInit {
   }
 
   getParams($event){
-    this.somos.consultaOfertaPersonalizada($event.pais,$event.campana,$event.consultora,$event.tipoPersonalizacion, $event.cuv).subscribe((response)=>{
+    this.somos.consultaOfertaPersonalizada($event.pais,$event.campana,$event.tipoPersonalizacion, $event.cuv).subscribe((response)=>{
 
     this.verDetalle=true;
-    this.dataDetalle=response.value;
+    this.dataDetalle=this.somos.convertResultToObject(response);
     console.log(response);
   },(error)=>{
     console.log(error);

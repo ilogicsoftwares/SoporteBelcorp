@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment'; 
 import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/http';
-import { Observable, of, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,105 +10,12 @@ export class SomosbelcorpService {
   conexionSoportId:number=25;
   constructor(private http: HttpClient) { }
 
-  getOfertaPersonalizada(codigoPais, codigoCampana, codigoConsultora, tipoPersonalizacion, cuv){
-    let sqlScriptPersonalizada = `use ${this.getBD(codigoPais)}
-    select * from ods.ofertaspersonalizadas
-    where AnioCampanaVenta = '${codigoCampana}'
-    and CodConsultora = '${codigoConsultora}'
-    and CUV = '${cuv}'
-    and TipoPersonalizacion = '${tipoPersonalizacion}'`;
-    
-    let params={idConexion:"23",
-    consultaSql:sqlScriptPersonalizada,
-    usuario:"sdigitalpalancas"};
+  public consultaOfertaPersonalizada(codigoPais, codigoCampana, tipoPersonalizacion, cuv): Observable<any> {
+    let url = `http://localhost:5000/Personalizacion/consultar/${codigoPais}/${codigoCampana}/${tipoPersonalizacion}/${cuv}`;
 
-    let ofertasPersonalizadas = this.http.post<any>("/Consultoras/EjecutarQuerySql",
-    params
-    )
+    let resultado = this.http.get(url);
 
-    return ofertasPersonalizadas;
-  }
-
-  getOfertaPersonalizadaCUV(codigoPais, codigoCampana, tipoPersonalizacion, cuv){
-    let sqlScriptPersonalizada = `use ${this.getBD(codigoPais)}
-    select * from ods.ofertaspersonalizadascuv
-    where AnioCampanaVenta = '${codigoCampana}'
-    and CUV = '${cuv}'
-    and TipoPersonalizacion = '${tipoPersonalizacion}'`;
-    
-    let params={idConexion:"23",
-    consultaSql:sqlScriptPersonalizada,
-    usuario:"sdigitalpalancas"};
-
-    let ofertasPersonalizadas = this.http.post<any>("/Consultoras/EjecutarQuerySql",
-    params
-    )
-
-    return ofertasPersonalizadas;
-  }
-
-  getProductoComercial(codigoPais, codigoCampana, cuv){
-    let sqlScriptPersonalizada = `use ${this.getBD(codigoPais)}
-    select * from ods.productocomercial
-    where AnoCampania = '${codigoCampana}'
-    and CUV = '${cuv}'`;
-    
-    let params={idConexion:"23",
-    consultaSql:sqlScriptPersonalizada,
-    usuario:"sdigitalpalancas"};
-
-    let ofertasPersonalizadas = this.http.post<any>("/Consultoras/EjecutarQuerySql",
-    params
-    )
-
-    return ofertasPersonalizadas;
-  }
-
-
-  public consultaOfertaPersonalizada(codigoPais, codigoCampana, codigoConsultora, tipoPersonalizacion, cuv): Observable<any> {
-
-    let respuestaFinal = [];
-    let listaOfertaPersonalizada = this.getOfertaPersonalizada(codigoPais, codigoCampana, codigoConsultora, tipoPersonalizacion, cuv);
-    let listaOfertaPersonalizadaX = this.getOfertaPersonalizada(codigoPais, codigoCampana, environment.consultoraX, tipoPersonalizacion, cuv);
-    let listaOfertaPersonalizadaY = this.getOfertaPersonalizada(codigoPais, codigoCampana, environment.consultoraY,tipoPersonalizacion, cuv);
-    let listaOfertaPersonalizadaCuv = this.getOfertaPersonalizadaCUV(codigoPais, codigoCampana,tipoPersonalizacion, cuv);
-    let listaProductoComercial = this.getProductoComercial(codigoPais, codigoCampana, cuv);
-    let respuesta = forkJoin
-    ([
-      listaOfertaPersonalizada, 
-      listaOfertaPersonalizadaX, 
-      listaOfertaPersonalizadaY,
-      listaOfertaPersonalizadaCuv,
-      listaProductoComercial
-    ]).pipe(map((data)=>{
-      let jsonOfertaPersonalizada = this.convertTableToObject(data[0]);
-      let jsonOfertaPersonalizadaX = this.convertTableToObject(data[1]);
-      let jsonOfertaPersonalizadaY = this.convertTableToObject(data[2]);
-      let listaOfertaPersonalizadaCuv = this.convertTableToObject(data[3]);
-      let listaProductoComercial = this.convertTableToObject(data[4]);
-      let mensaje = "";
-
-      if(jsonOfertaPersonalizada.length == 0){
-        if(jsonOfertaPersonalizadaX.length == 0 && jsonOfertaPersonalizadaY.length == 0){
-          mensaje = 'No se encontró oferta en oferta personalizada SQL|';
-        }
-      }
-
-      if(listaOfertaPersonalizadaCuv.length == 0){
-        mensaje += 'No se encontró oferta en oferta personalizada cuv SQL|';
-      }
-
-      if(listaProductoComercial.length == 0){
-        mensaje += 'No se encontró oferta en producto comercial SQL|';
-      }
-
-      let respuestaFinal = [
-        {Mensaje : mensaje}
-      ]
-      
-      return of(respuestaFinal);
-    }));
-    return respuesta;
+    return resultado;
   }
 
   cosultarPedidoDetalle(codigopais,codigoCampana,codigoConsultora){
@@ -128,6 +34,15 @@ export class SomosbelcorpService {
     )
   }
 
+  convertResultToObject(response){
+    let data=[];
+    if(response.message == "OK"){
+      data.push({"Mensaje": response.result});
+    }else{
+      data.push({"Mensaje": "Horror"});
+    }
+    return data;
+  }
   convertTableToObject(tablex){
     let data=[];
     let table=tablex[0];

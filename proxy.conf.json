@@ -9,5 +9,11 @@
       "target": "http://soporte.somosbelcorp.com",
       "secure": false,
       "changeOrigin": true
+    },
+    
+    "/Personalizacion/*": {
+      "target": "http://localhost:5000",
+      "secure": false,
+      "changeOrigin": true
     }
   }
