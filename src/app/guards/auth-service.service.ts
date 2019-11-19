@@ -18,9 +18,10 @@ export  class AuthServiceService {
     this.headers = this.headers.append('Content-Type', 'application/json');
   }
   login(user: string,pws: string){
-    return this.http.post<any>("/Seguridad/LoginInicio",
+    /*return this.http.post<any>("/Seguridad/LoginInicio",
     {UserLogin:user,Password:pws},{headers:this.headers,withCredentials:true},
-    )
+    )*/
+    return true;
   }
    public  IsAuth(){
      return  JSON.parse(this.session.getKey("isAuth"));

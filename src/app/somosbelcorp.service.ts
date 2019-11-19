@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment'; 
 import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +9,14 @@ import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/h
 export class SomosbelcorpService {
   conexionSoportId:number=25;
   constructor(private http: HttpClient) { }
+
+  public consultaOfertaPersonalizada(codigoPais, codigoCampana, tipoPersonalizacion, cuv): Observable<any> {
+    let url = `http://localhost:5000/Personalizacion/consultar/${codigoPais}/${codigoCampana}/${tipoPersonalizacion}/${cuv}`;
+
+    let resultado = this.http.get(url);
+
+    return resultado;
+  }
 
   cosultarPedidoDetalle(codigopais,codigoCampana,codigoConsultora){
     let sqlScript=`use ${codigopais}
@@ -23,6 +33,7 @@ export class SomosbelcorpService {
     params,
     )
   }
+
   consultarPedidoSet(codigopais,pedidoid){
     let sqlScript=`use ${codigopais}
     select top 10 * from pedidowebset where pedidoid='${pedidoid}'`;
@@ -71,7 +82,51 @@ export class SomosbelcorpService {
     return this.http.post<any>("/Consultoras/EjecutarQuerySql",
     params);
   }
-  getPedidoWebSet(){
+  getBD(codigoPais:string){
+    let bd = "";
 
+    switch (codigoPais) {
+      case ("BO"):
+        bd="BelcorpBolivia";
+        break;
+      case ("CL"):
+        bd="BelcorpChile";
+        break;
+      case ("CO"):
+        bd="BelcorpColombia";
+        break;
+      case ("CR"):
+        bd="BelcorpCostaRica";
+        break;
+      case ("DO"):
+        bd="BelcorpDominicana";
+        break;
+      case ("EC"):
+        bd="BelcorpEcuador";
+        break;
+      case ("GT"):
+        bd="BelcorpGuatemala";
+        break;
+      case ("MX"):
+        bd="BelcorpMexico";
+        break;
+      case ("PA"):
+        bd="BelcorpPanama";
+        break;
+      case ("PE"):
+        bd="BelcorpPeru";
+        break;
+      case ("PR"):
+        bd="BelcorpPuertoRico";
+        break;
+      case ("SV"):
+        bd="BelcorpSalvador";
+        break;
+      default:
+        bd = "";
+        break;
+    }
+
+    return bd;
   }
 }

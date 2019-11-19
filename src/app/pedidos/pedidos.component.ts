@@ -6,8 +6,9 @@ import { TableComponent } from '../forms/table/table.component';
 let controles=[{
   label:"País:",
   inputid:"pais",
-  inputPlaceHolder:"Codigo País(BD)",
-  controlType:'input'
+  inputPlaceHolder:"Codigo País",
+  controlType:'input',
+
 },{
   label:"Campaña:",
   inputid:"campana",

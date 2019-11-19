@@ -28,13 +28,14 @@ export class MainLoginComponent implements OnInit {
   login(){
   this.loaderActive=true;
    let request=this.authService.login(this.usuario,this.clave);
+    /*
    this.authService.login(this.usuario,this.clave).subscribe((data) =>{
     console.log(data.headers);
-    if (data.Success){
+    if (data.Success){*/
       this.authService.setAuth("true");
       
       this.router.navigate(['/home']);
-      
+      /*
     }else{
       this.userError=true;
       
@@ -45,7 +46,7 @@ export class MainLoginComponent implements OnInit {
     console.log(error);
     this.usuario='';
     this.clave='';
-   });
+   });*/
   }
 
 }
