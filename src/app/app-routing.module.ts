@@ -9,6 +9,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { CuvsComponent } from './cuvs/cuvs.component';
 import { OfertaPersonalizadaComponent } from './components/oferta-personalizada/oferta-personalizada.component';
+import { ConsultaOpConsultoraComponent } from './components/consulta-op-consultora/consulta-op-consultora.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login',pathMatch:'full'},
@@ -29,6 +30,12 @@ const routes: Routes = [
    {
     path:"ofertaPersonalizada",
     component:OfertaPersonalizadaComponent,
+    canActivate:[AuthGuardService],
+    outlet:'secondary'
+  },
+  {
+    path:"ofertaPersonalizadaConsultora",
+    component:ConsultaOpConsultoraComponent,
     canActivate:[AuthGuardService],
     outlet:'secondary'
   },

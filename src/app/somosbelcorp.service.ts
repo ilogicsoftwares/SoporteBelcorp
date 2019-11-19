@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment'; 
 import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {map} from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,31 @@ export class SomosbelcorpService {
 
     return resultado;
   }
+
+  public consultaOfertaPersonalizadaPorConsultora(codigoPais, codigoCampana, tipoPersonalizacion, codConsultora): Observable<any> {
+    let url = `http://internal-elbwcf-sbmicroserviciosprd-435783028.us-east-1.elb.amazonaws.com:5000/Oferta/${codigoPais}/${tipoPersonalizacion}/${codigoCampana}/${codConsultora}/0/0/0/0/0/0`;
+
+    let resultado = this.http.get(url).pipe(
+      map((data:any)=>{
+
+       let resultado = data.result.map((item)=>{
+        return {
+          FlagRevista: item.FlagRevista,
+          Orden: item.Orden,
+          CUV2: item.CUV2,
+          DescripcionCUV2: item.DescripcionCUV2
+        }
+       })
+
+       resultado.sort(function(a, b){return b.FlagRevista - a.FlagRevista});
+       return resultado;
+      })
+    );
+
+    return resultado;
+  }
+
+
 
   cosultarPedidoDetalle(codigopais,codigoCampana,codigoConsultora){
     let sqlScript=`use ${codigopais}

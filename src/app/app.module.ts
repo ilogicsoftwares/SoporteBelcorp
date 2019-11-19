@@ -20,6 +20,7 @@ import { InputComponent } from './forms/input/input.component';
 import {AgGridModule} from 'ag-grid-angular';
 import { TableComponent } from './forms/table/table.component';
 import { OfertaPersonalizadaComponent } from './components/oferta-personalizada/oferta-personalizada.component';
+import { ConsultaOpConsultoraComponent } from './components/consulta-op-consultora/consulta-op-consultora.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { OfertaPersonalizadaComponent } from './components/oferta-personalizada/
     FormTinybaseComponent,
     InputComponent,
     TableComponent,
-    OfertaPersonalizadaComponent
+    OfertaPersonalizadaComponent,
+    ConsultaOpConsultoraComponent
   ],
   imports: [
     BrowserModule,
