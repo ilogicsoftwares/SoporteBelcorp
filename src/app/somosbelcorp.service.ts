@@ -65,6 +65,17 @@ export class SomosbelcorpService {
     return data;
    
   }
+
+  convertResultToObject(response){
+    let data=[];
+    if(response.message == "OK"){
+      data.push({"Mensaje": response.result});
+    }else{
+      data.push({"Mensaje": "Horror"});
+    }
+    return data;
+  }
+  
   convertRowToObject(Fila,ColNames:any[]){
     let object={};
     ColNames.forEach((element,index) => {
