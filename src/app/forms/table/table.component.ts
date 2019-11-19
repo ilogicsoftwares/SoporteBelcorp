@@ -14,6 +14,7 @@ export class TableComponent implements OnInit {
     let colnames=Object.keys(v[0]);
     this.columnDefs=colnames.map(item=>{
      return  {headerName:item,field:item,suppressSizeToFit: true, resizable:true};
+
     });
     this.rowData=v;
   };

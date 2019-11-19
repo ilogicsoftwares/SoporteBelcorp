@@ -46,7 +46,7 @@ export class SomosbelcorpService {
 
   cosultarPedidoDetalle(codigopais,codigoCampana,codigoConsultora){
     let sqlScript=`use ${codigopais}
-    select  pwd.PedidoID,pwd.CUV, pwd.PedidoDetalleID, pwd.CANTIDAD,pwd.PrecioUnidad,pwd.ImporteTotal,pwd.TipoEstrategiaID from pedidoweb ped
+    select  pwd.* from pedidoweb ped
     inner join ods.consultora con on con.consultoraid = ped.consultoraid
     inner join pedidowebdetalle pwd on pwd.pedidoid=ped.pedidoid
     inner join usuario us on us.codigoconsultora = con.codigo
@@ -60,14 +60,27 @@ export class SomosbelcorpService {
     )
   }
 
-  convertResultToObject(response){
-    let data=[];
-    if(response.message == "OK"){
-      data.push({"Mensaje": response.result});
-    }else{
-      data.push({"Mensaje": "Horror"});
-    }
-    return data;
+  consultarPedidoSet(codigopais,pedidoid){
+    let sqlScript=`use ${codigopais}
+    select top 10 * from pedidowebset where pedidoid='${pedidoid}'`;
+    let params={idConexion:"23",
+    consultaSql:sqlScript,
+    usuario:"sdigitalpalancas"};
+
+    return this.http.post<any>("/Consultoras/EjecutarQuerySql",
+    params,
+    )
+  }
+  consultarPedidoSetDetalle(codigopais,pedidoid){
+    let sqlScript=`use ${codigopais}
+    select * from pedidowebsetdetalle where setid in (select setid from pedidowebset where pedidoid='${pedidoid}')`;
+    let params={idConexion:"23",
+    consultaSql:sqlScript,
+    usuario:"sdigitalpalancas"};
+
+    return this.http.post<any>("/Consultoras/EjecutarQuerySql",
+    params,
+    )
   }
   convertTableToObject(tablex){
     let data=[];

@@ -2,3 +2,5 @@
 <app-form-tinybase [inputs]="inputs" (eventAplicar)="getParams($event)"></app-form-tinybase>
 
 <app-table #tbl *ngIf="verDetalle" [data]="dataDetalle" [title]="'Pedido Detalle'"></app-table>
+<app-table #tbl *ngIf="verDetalle" [data]="dataSet" [title]="'Sets en Pedido'"></app-table>
+<app-table #tbl *ngIf="verDetalle" [data]="dataSetDetalle" [title]="'Detalle de Sets'"></app-table>
