@@ -6,7 +6,7 @@
     "start": "node server.js",
     "heroku-postbuild": "npm run build",
     "build": "ng build --prod",
-    "dev":"ng serve",
+    "dev": "ng serve",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -25,6 +25,7 @@
     "@angular/router": "~7.2.0",
     "ag-grid-angular": "^20.1.0",
     "ag-grid-community": "^20.1.0",
+    "cookie": "^0.4.0",
     "core-js": "^2.5.4",
     "express": "^4.17.1",
     "path": "^0.12.7",

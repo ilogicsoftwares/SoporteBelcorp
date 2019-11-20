@@ -3,6 +3,7 @@ import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/h
 import {SessionService} from  '../session.service'
 import { JsonPipe } from '@angular/common';
 import { jsonpCallbackContext } from '@angular/common/http/src/module';
+const  cookie = require("cookie");
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +16,7 @@ export  class AuthServiceService {
   headers=new HttpHeaders();
   
   constructor(private http: HttpClient, private session:SessionService){
-    this.headers = this.headers.append('Content-Type', 'application/json');
+   this.headers.append('Content-Type', 'application/json');
   }
   login(user: string,pws: string){
     return this.http.post<any>("http://localhost:8080/Seguridad/LoginInicio",
@@ -32,5 +33,12 @@ export  class AuthServiceService {
    public setAuth(value:string){
     this.session.setKey("isAuth",value);
    }
-   
+   public setToken(value: string){
+    document.cookie = value;
+   }
+   public getToken(){
+   const objectX = cookie.parse(document.cookie);
+   return cookie.serialize('.ASPXAUTH', objectX['.ASPXAUTH']);
+   }
+
 }

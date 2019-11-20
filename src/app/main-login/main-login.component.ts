@@ -29,11 +29,13 @@ export class MainLoginComponent implements OnInit {
     this.loaderActive = true;
     let request = this.authService.login(this.usuario, this.clave);
 
-    this.authService.login(this.usuario, this.clave).subscribe((data) => {
+    this.authService.login(this.usuario, this.clave).subscribe((data: any) => {
       console.log(data.headers);
-      debugger;
+      
       if (data.data.Success) {
         this.authService.setAuth('true');
+        this.authService.setToken(data.headers["set-cookie"][1]);
+        console.log(this.authService.getToken());
 
         this.router.navigate(['/home']);
 

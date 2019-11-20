@@ -3,13 +3,18 @@ import { environment } from '../environments/environment';
 import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators'
+import { AuthServiceService } from './guards/auth-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SomosbelcorpService {
   conexionSoportId:number=25;
-  constructor(private http: HttpClient) { }
+  headers=new HttpHeaders();
+  constructor(private http: HttpClient, private authService: AuthServiceService) { 
+   this.headers = this.headers.append('Content-Type', 'application/json');
+   this.headers = this.headers.append('token', this.authService.getToken());
+  }
 
   public consultaOfertaPersonalizada(codigoPais, codigoCampana, tipoPersonalizacion, cuv): Observable<any> {
     let url = `http://localhost:5000/Personalizacion/consultar/${codigoPais}/${codigoCampana}/${tipoPersonalizacion}/${cuv}`;
@@ -56,8 +61,7 @@ export class SomosbelcorpService {
     usuario:"sdigitalpalancas"};
 
     return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
-    params,
-    )
+    params, {headers: this.headers});
   }
 
   consultarPedidoSet(codigopais,pedidoid){
@@ -68,8 +72,7 @@ export class SomosbelcorpService {
     usuario:"sdigitalpalancas"};
 
     return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
-    params,
-    )
+    params, {headers: this.headers})
   }
   consultarPedidoSetDetalle(codigopais,pedidoid){
     let sqlScript=`use ${codigopais}
@@ -79,8 +82,7 @@ export class SomosbelcorpService {
     usuario:"sdigitalpalancas"};
 
     return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
-    params,
-    )
+    params, {headers: this.headers});
   }
   convertTableToObject(tablex){
     let data=[];
@@ -117,7 +119,7 @@ export class SomosbelcorpService {
     usuario:"sdigitalpalancas"};
 
     return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
-    params);
+    params, {headers: this.headers});
   }
   getBD(codigoPais:string){
     let bd = "";

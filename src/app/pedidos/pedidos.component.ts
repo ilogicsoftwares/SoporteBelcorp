@@ -42,13 +42,14 @@ export class PedidosComponent implements OnInit {
   }
 
   getParams($event){
-      this.somos.cosultarPedidoDetalle($event.pais,$event.campana,$event.consultora).subscribe((response)=>{
-      debugger;
+
+      const pais = this.somos.getBD($event.pais);
+      this.somos.cosultarPedidoDetalle(pais,$event.campana,$event.consultora).subscribe((response)=>{
       this.verDetalle=true;
       this.dataDetalle=this.somos.convertTableToObject(response);
       console.log(response);
       //pedidowebSet
-      this.somos.consultarPedidoSet($event.pais,this.dataDetalle[0].PedidoID).subscribe((response2)=>{
+      this.somos.consultarPedidoSet(pais,this.dataDetalle[0].PedidoID).subscribe((response2)=>{
  
         this.verDetalle=true;
         this.dataSet=this.somos.convertTableToObject(response2);
@@ -57,7 +58,7 @@ export class PedidosComponent implements OnInit {
         console.log(error);
       })
       console.log($event);
-      this.somos.consultarPedidoSetDetalle($event.pais,this.dataDetalle[0].PedidoID).subscribe((response3)=>{
+      this.somos.consultarPedidoSetDetalle(pais,this.dataDetalle[0].PedidoID).subscribe((response3)=>{
  
         this.verDetalle=true;
         this.dataSetDetalle=this.somos.convertTableToObject(response3);
