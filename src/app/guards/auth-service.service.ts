@@ -18,7 +18,7 @@ export  class AuthServiceService {
     this.headers = this.headers.append('Content-Type', 'application/json');
   }
   login(user: string,pws: string){
-    return this.http.post<any>("http://soporte.somosbelcorp.com/Seguridad/LoginInicio",
+    return this.http.post<any>("http://localhost:8080/Seguridad/LoginInicio",
     {UserLogin:user,Password:pws},{headers:this.headers,withCredentials:true},
     )
 

@@ -55,7 +55,7 @@ export class SomosbelcorpService {
     consultaSql:sqlScript,
     usuario:"sdigitalpalancas"};
 
-    return this.http.post<any>("/Consultoras/EjecutarQuerySql",
+    return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
     params,
     )
   }
@@ -67,7 +67,7 @@ export class SomosbelcorpService {
     consultaSql:sqlScript,
     usuario:"sdigitalpalancas"};
 
-    return this.http.post<any>("/Consultoras/EjecutarQuerySql",
+    return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
     params,
     )
   }
@@ -78,7 +78,7 @@ export class SomosbelcorpService {
     consultaSql:sqlScript,
     usuario:"sdigitalpalancas"};
 
-    return this.http.post<any>("/Consultoras/EjecutarQuerySql",
+    return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
     params,
     )
   }
@@ -116,7 +116,7 @@ export class SomosbelcorpService {
     consultaSql:sqlScript,
     usuario:"sdigitalpalancas"};
 
-    return this.http.post<any>("/Consultoras/EjecutarQuerySql",
+    return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
     params);
   }
   getBD(codigoPais:string){

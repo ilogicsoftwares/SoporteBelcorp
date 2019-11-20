@@ -31,7 +31,8 @@ export class MainLoginComponent implements OnInit {
 
     this.authService.login(this.usuario, this.clave).subscribe((data) => {
       console.log(data.headers);
-      if (data.Success) {
+      debugger;
+      if (data.data.Success) {
         this.authService.setAuth('true');
 
         this.router.navigate(['/home']);
