@@ -26,9 +26,9 @@ export class SomosbelcorpService {
   }
 
   public consultaOfertaPersonalizadaPorConsultora(codigoPais, codigoCampana, tipoPersonalizacion, codConsultora): Observable<any> {
-    let url = `http://internal-elbwcf-sbmicroserviciosprd-435783028.us-east-1.elb.amazonaws.com:5000/Oferta/${codigoPais}/${tipoPersonalizacion}/${codigoCampana}/${codConsultora}/0/0/0/0/0/0`;
-
-    let resultado = this.http.get(url).pipe(
+    
+    let params = {codigoPais:codigoPais, codigoCampana:codigoCampana, tipoPersonalizacion:tipoPersonalizacion,codConsultora:codConsultora};
+    let resultado = this.http.post(this.apiurl + "/ofpConsultora",params).pipe(
       map((data:any)=>{
 
        let resultado = data.result.map((item)=>{

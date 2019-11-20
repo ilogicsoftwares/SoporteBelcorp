@@ -7,7 +7,7 @@ export const environment = {
   production: false,
   consultoraY: "YYYYYYYYY",
   consultoraX: "XXXXXXXXX",
-  api:"https://soportebelcorpapi.herokuapp.com"
+  api:"https://soportebelcorpapi.herokuapp.com"//"https://soportebelcorpapi.herokuapp.com"/"http://localhost:8080"
 };
 
 /*
