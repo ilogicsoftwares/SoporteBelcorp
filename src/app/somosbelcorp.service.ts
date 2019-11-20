@@ -10,6 +10,7 @@ import { AuthServiceService } from './guards/auth-service.service';
 })
 export class SomosbelcorpService {
   conexionSoportId:number=25;
+  apiurl = environment.api;
   headers=new HttpHeaders();
   constructor(private http: HttpClient, private authService: AuthServiceService) { 
    this.headers = this.headers.append('Content-Type', 'application/json');
@@ -71,8 +72,8 @@ export class SomosbelcorpService {
     consultaSql:sqlScript,
     usuario:"sdigitalpalancas"};
 
-    return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
-    params, {headers: this.headers})
+    return this.http.post<any>( this.apiurl + "/Consultoras/EjecutarQuerySql",
+    params, {headers: this.headers});
   }
   consultarPedidoSetDetalle(codigopais,pedidoid){
     let sqlScript=`use ${codigopais}
@@ -81,7 +82,7 @@ export class SomosbelcorpService {
     consultaSql:sqlScript,
     usuario:"sdigitalpalancas"};
 
-    return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
+    return this.http.post<any>(this.apiurl + "/Consultoras/EjecutarQuerySql",
     params, {headers: this.headers});
   }
   convertTableToObject(tablex){
@@ -118,7 +119,7 @@ export class SomosbelcorpService {
     consultaSql:sqlScript,
     usuario:"sdigitalpalancas"};
 
-    return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
+    return this.http.post<any>(this.apiurl + "/Consultoras/EjecutarQuerySql",
     params, {headers: this.headers});
   }
   getBD(codigoPais:string){

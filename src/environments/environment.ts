@@ -6,7 +6,8 @@
 export const environment = {
   production: false,
   consultoraY: "YYYYYYYYY",
-  consultoraX: "XXXXXXXXX"
+  consultoraX: "XXXXXXXXX",
+  api:"http://localhost:8080"
 };
 
 /*
