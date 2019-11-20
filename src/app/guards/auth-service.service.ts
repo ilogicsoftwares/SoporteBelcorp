@@ -3,6 +3,7 @@ import {HttpClient, HttpXsrfTokenExtractor, HttpHeaders} from '@angular/common/h
 import {SessionService} from  '../session.service'
 import { JsonPipe } from '@angular/common';
 import { jsonpCallbackContext } from '@angular/common/http/src/module';
+import {environment} from "../../environments/environment"
 const  cookie = require("cookie");
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,12 @@ const  cookie = require("cookie");
 export  class AuthServiceService {
   
   headers=new HttpHeaders();
-  
-  constructor(private http: HttpClient, private session:SessionService){
+  apiuri = environment.api;
+  constructor(private http: HttpClient, private session:SessionService ){
    this.headers.append('Content-Type', 'application/json');
   }
   login(user: string,pws: string){
-    return this.http.post<any>("http://localhost:8080/Seguridad/LoginInicio",
+    return this.http.post<any>( this.apiuri + "/Seguridad/LoginInicio",
     {UserLogin:user,Password:pws},{headers:this.headers,withCredentials:true},
     )
 
