@@ -61,7 +61,7 @@ export class SomosbelcorpService {
     consultaSql:sqlScript,
     usuario:"sdigitalpalancas"};
 
-    return this.http.post<any>("http://localhost:8080/Consultoras/EjecutarQuerySql",
+    return this.http.post<any>(this.apiurl+ "/Consultoras/EjecutarQuerySql",
     params, {headers: this.headers});
   }
 
